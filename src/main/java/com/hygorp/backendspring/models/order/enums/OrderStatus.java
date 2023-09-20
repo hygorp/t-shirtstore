@@ -9,7 +9,7 @@ public enum OrderStatus {
     CONFIRMED("confirmed"),
     SHIPPED("shipped"),
     DELIVERED("delivered"),
-    CANCELED("canceld");
+    CANCELED("canceled");
 
     @Enumerated(EnumType.STRING)
     private final String status;
@@ -17,5 +17,4 @@ public enum OrderStatus {
     OrderStatus(String status) {
         this.status = status;
     }
-
 }

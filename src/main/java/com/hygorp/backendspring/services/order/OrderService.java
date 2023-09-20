@@ -13,6 +13,10 @@ public class OrderService {
     @Autowired
     OrderRepository orderRepository;
 
+    public Order saveOrder(Order order) {
+        return orderRepository.save(order);
+    }
+
     public List<Order> getAllOrders() {
         return orderRepository.findAll();
     }
@@ -21,8 +25,5 @@ public class OrderService {
         return orderRepository.findById(id).orElseThrow();
     }
 
-    public List<Order> getAllOrdersByClientId(Long id) {
-        return orderRepository.findByClient_Id(id);
-    }
 
 }
