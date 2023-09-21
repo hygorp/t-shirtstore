@@ -3,8 +3,12 @@ package com.hygorp.backendspring.services.category;
 import com.hygorp.backendspring.models.category.Category;
 import com.hygorp.backendspring.models.category.CategoryDTO;
 import com.hygorp.backendspring.repositories.category.CategoryRepository;
+import com.hygorp.backendspring.resources.category.CategoryResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import java.util.List;
 
@@ -19,11 +23,17 @@ public class CategoryService {
     }
 
     public List<Category> getAllCategories() {
-        return categoryRepository.findAll();
+        List<Category> categories = categoryRepository.findAll();
+        for(Category category : categories) {
+            category.add(linkTo(methodOn(CategoryResource.class).getCategoryById(category.getId())).withSelfRel());
+        }
+        return categories;
     }
 
     public Category getCategoryById(Long id) {
-        return categoryRepository.findById(id).orElseThrow();
+        Category category = categoryRepository.findById(id).orElseThrow();
+        category.add(linkTo(methodOn(CategoryResource.class).getAllCategories()).withRel("Category List"));
+        return category;
     }
 
     public Category updateCategory(Long id, CategoryDTO category) {

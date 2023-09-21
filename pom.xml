@@ -17,7 +17,7 @@
         <java.version>17</java.version>
         <h2.version>2.2.222</h2.version>
         <junit.version>5.9.3</junit.version>
-        <swagger.version>3.0.0</swagger.version>
+        <springdoc.version>2.2.0</springdoc.version>
         <jwt.version>4.4.0</jwt.version>
     </properties>
     <dependencies>
@@ -58,6 +58,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>${springdoc.version}</version>
         </dependency>
 
         <dependency>

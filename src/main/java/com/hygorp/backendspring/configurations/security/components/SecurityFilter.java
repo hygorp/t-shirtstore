@@ -1,4 +1,4 @@
-package com.hygorp.backendspring.security.components;
+package com.hygorp.backendspring.configurations.security.components;
 
 import com.hygorp.backendspring.services.security.TokenService;
 import com.hygorp.backendspring.services.user.UserService;
