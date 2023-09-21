@@ -48,6 +48,7 @@ public class OrderItem implements Serializable {
         id.setOrder(order);
     }
 
+    @JsonIgnoreProperties(value = {"links"})
     public Product getProduct() {
         return id.getProduct();
     }

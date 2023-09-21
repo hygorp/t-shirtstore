@@ -1,5 +1,8 @@
 package com.hygorp.backendspring.resources.product;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 import com.hygorp.backendspring.models.product.Product;
 import com.hygorp.backendspring.models.product.ProductDTO;
 import com.hygorp.backendspring.services.product.ProductService;
@@ -40,12 +43,17 @@ public class ProductResource {
     @GetMapping
     public ResponseEntity<List<Product>> getAllProducts() {
         List<Product> products = productService.getAllProducts();
+        for(Product product : products) {
+            UUID id = product.getId();
+            product.add(linkTo(methodOn(ProductResource.class).getProductById(id)).withSelfRel());
+        }
         return ResponseEntity.ok().body(products);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable UUID id) {
         Product product = productService.getProductById(id);
+        product.add(linkTo(methodOn(ProductResource.class).getAllProducts()).withSelfRel());
         return ResponseEntity.ok().body(product);
     }
 

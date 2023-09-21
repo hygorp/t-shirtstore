@@ -1,5 +1,8 @@
 package com.hygorp.backendspring.resources.category;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 import com.hygorp.backendspring.models.category.Category;
 import com.hygorp.backendspring.models.category.CategoryDTO;
 import com.hygorp.backendspring.services.category.CategoryService;
@@ -29,12 +32,16 @@ public class CategoryResource {
     @GetMapping
     public ResponseEntity<List<Category>> getAllCategories() {
         List<Category> categories = categoryService.getAllCategories();
+        for(Category category : categories) {
+            category.add(linkTo(methodOn(CategoryResource.class).getCategoryById(category.getId())).withSelfRel());
+        }
         return ResponseEntity.ok().body(categories);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Category> getCategoryById(@PathVariable Long id) {
         Category category = categoryService.getCategoryById(id);
+        category.add(linkTo(methodOn(CategoryResource.class).getAllCategories()).withSelfRel());
         return ResponseEntity.ok().body(category);
     }
 
